@@ -1,3 +1,5 @@
+__all__ = ['create_equipe', 'get_equipes', 'get_equipe_by_id', 'delete_equipe']
+
 # Variaveis globais
 lista_equipes = list()
 
@@ -6,7 +8,7 @@ OPERACAO_REALIZADA_COM_SUCESSO = 0
 EQUIPE_NAO_ENCONTRADA = 1
 
 
-def create_equipe(nome: str, funcoes: list) -> tuple[int, list]:
+def create_equipe(nome: str, funcoes: list) -> tuple[int, dict]:
     global lista_equipes
 
     equipe = {
@@ -24,7 +26,7 @@ def get_equipes() -> tuple[int, list]:
     return OPERACAO_REALIZADA_COM_SUCESSO, lista_equipes
 
 
-def get_equipe_by_id(id_equipe: int) -> tuple[int, list]:
+def get_equipe_by_id(id_equipe: int) -> tuple[int, dict]:
     global lista_equipes
 
     for equipe in lista_equipes:
