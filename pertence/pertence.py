@@ -1,73 +1,98 @@
+# Variáveis globais
+lista_pertence = list()
+id_pertence_provisorio = 2220
+
+# Atributos exportados
 __all__ = [
     "attach_equipe",
     "detach_equipe",
-    "get_equipe_from_projeto",
-    "get_projetos_from_equipe"
+    "get_equipe_from_projetos",
+    "get_projetos_from_equipes",
 ]
-
-# Variáveis globais
-relacoes = []
-id_relacao = 0
 
 # Códigos de erro
 STATUS_OK = 0
 DADOS_INVALIDOS = 1
+ERRO_AO_DELETAR = 2
 CONFLITO = 3
-DADO_NAO_ENCONTRADO = 4
+DADO_NÃO_ENCONTRADO = 4
+EQUIPE_NÃO_ASSOCIADA_AO_PROJETO = 10
+EQUIPE_JÁ_ASSOCIADA_AO_PROJETO = 11
+
 
 def attach_equipe(id_projeto: int, id_equipe: int) -> tuple[int, dict]:
-    global relacoes
-    global id_relacao
+    """
+    Associa uma equipe a um projeto.
 
-    # Validações
-    if not isinstance(id_projeto, int) or not isinstance(id_equipe, int):
-        return DADOS_INVALIDOS, "IDs inválidos."
+    id_projeto: ID do projeto.
+    id_equipe: ID da equipe.
+    return: Código de status e o objeto de associação criado.
+    """
+    global lista_pertence
+    global id_pertence_provisorio
 
-    for relacao in relacoes:
-        if relacao["id_projeto"] == id_projeto and relacao["id_equipe"] == id_equipe:
-            return CONFLITO, "Equipe já associada ao projeto."
+    for pertence in lista_pertence:
+        if pertence["id_projeto"] == id_projeto and pertence["id_equipe"] == id_equipe:
+            return EQUIPE_JÁ_ASSOCIADA_AO_PROJETO, {}
 
-    id_relacao += 1
-    relacao = {
-        "id": id_relacao,
+    id_pertence_provisorio += 1
+    pertence = {
+        "id": id_pertence_provisorio,
         "id_projeto": id_projeto,
-        "id_equipe": id_equipe
+        "id_equipe": id_equipe,
     }
-    relacoes.append(relacao)
-    return STATUS_OK, relacao
+    lista_pertence.append(pertence)
+    return STATUS_OK, pertence
 
 
 def detach_equipe(id_projeto: int, id_equipe: int) -> tuple[int, dict]:
-    global relacoes
+    """
+    Remove a associação de uma equipe a um projeto.
 
-    for relacao in relacoes:
-        if relacao["id_projeto"] == id_projeto and relacao["id_equipe"] == id_equipe:
-            relacoes.remove(relacao)
-            return STATUS_OK, relacao
+    id_projeto: ID do projeto.
+    id_equipe: ID da equipe.
+    return: Código de status e o objeto de associação removido.
+    """
+    global lista_pertence
 
-    return DADO_NAO_ENCONTRADO, "Associação não encontrada."
+    for pertence in lista_pertence:
+        if pertence["id_projeto"] == id_projeto and pertence["id_equipe"] == id_equipe:
+            lista_pertence.remove(pertence)
+            return STATUS_OK, pertence
 
-
-def get_equipe_from_projeto(id_projeto: int) -> tuple[int, list]:
-    global relacoes
-
-    equipes = [relacao["id_equipe"] for relacao in relacoes if relacao["id_projeto"] == id_projeto]
-
-    if not equipes:
-        return DADO_NAO_ENCONTRADO, "Nenhuma equipe associada ao projeto."
-    return STATUS_OK, equipes
+    return EQUIPE_NÃO_ASSOCIADA_AO_PROJETO, {}
 
 
-def get_projetos_from_equipe(id_equipe: int) -> tuple[int, list]:
-    global relacoes
+def get_equipe_from_projetos(id_projeto: int) -> tuple[int, list[dict]]:
+    """
+    Retorna todas as equipes associadas a um projeto.
 
-    projetos = [relacao["id_projeto"] for relacao in relacoes if relacao["id_equipe"] == id_equipe]
+    id_projeto: ID do projeto.
+    return: Código de status e lista de equipes associadas.
+    """
+    global lista_pertence
 
-    if not projetos:
-        return DADO_NAO_ENCONTRADO, "Nenhum projeto associado à equipe."
-    return STATUS_OK, projetos
+    equipes = [pertence for pertence in lista_pertence if pertence["id_projeto"] == id_projeto]
 
-def reset_relacoes():
-    global relacoes, id_relacao
-    relacoes.clear()
-    id_relacao = 0
+    if equipes:
+        return STATUS_OK, equipes
+
+    return DADO_NÃO_ENCONTRADO, []
+
+
+def get_projetos_from_equipes(id_equipe: int) -> tuple[int, list[dict]]:
+    """
+    Retorna todos os projetos associados a uma equipe.
+
+    id_equipe: ID da equipe.
+    return: Código de status e lista de projetos associados.
+    """
+    global lista_pertence
+
+    projetos = [pertence for pertence in lista_pertence if pertence["id_equipe"] == id_equipe]
+
+    if projetos:
+        return STATUS_OK, projetos
+
+    return DADO_NÃO_ENCONTRADO, []
+
