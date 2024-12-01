@@ -1,0 +1,1 @@
+from .compactador import compacta, descompacta
