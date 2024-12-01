@@ -28,6 +28,9 @@ def create_projeto(titulo: str, descricao: str, prazo: tuple[int, int, int]) -> 
     global lista_projetos
     global id_projeto_provisorio
 
+    if not titulo or not descricao:
+        return DADOS_INVALIDOS, {}
+
     try:
         id_projeto_provisorio += 1
         projeto = {
@@ -38,6 +41,7 @@ def create_projeto(titulo: str, descricao: str, prazo: tuple[int, int, int]) -> 
         }
         lista_projetos.append(projeto)
         return STATUS_OK, projeto
+
     except Exception as e:
         print(f"Erro inesperado ao criar projeto: {e}")
         return DADOS_INVALIDOS, {}
