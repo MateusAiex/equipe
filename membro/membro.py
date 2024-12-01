@@ -3,8 +3,8 @@ __all__ = [
   "set_funcoes",
   "get_membro_by_id",
   "get_membros",
-  "delete_membro"
-  "delete_membros"
+  "delete_membro",
+  "lista_membros"
 ]
 
 # Variaveis globais
@@ -77,13 +77,3 @@ def delete_membro(id: int) -> tuple[int, dict]:
             return STATUS_OK, m
 
     return DADO_NAO_ENCONTRADO, "Membro não encontrado"
-
-def delete_membros():
-    global lista_membros
-    global id_membro
-    
-    id_membro = 0
-
-    lista_membros = list()
-    return STATUS_OK, "Membros deletados com sucesso"
-

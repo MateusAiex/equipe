@@ -1,6 +1,6 @@
 
 import unittest
-from membro import create_membro, delete_membro, set_funcoes, get_membro_by_id, get_membros, delete_membros
+from membro import create_membro, delete_membro, set_funcoes, get_membro_by_id, get_membros, lista_membros
 
 # Definições dos códigos de erro
 STATUS_OK = 0
@@ -10,6 +10,10 @@ CONFLITO = 3
 DADO_NAO_ENCONTRADO = 4
 
 class TestMembroFunctions(unittest.TestCase):
+    def setUp(self):
+        # Limpar lista_membros para cada teste
+        global lista_membros
+        lista_membros.clear()
 
     def test_create_membro_success(self):
         resultado, membro = create_membro("João", ["Analista", "Consultor"])
@@ -77,8 +81,6 @@ class TestMembroFunctions(unittest.TestCase):
         resultado, mensagem = get_membro_by_id(99)
         self.assertEqual(resultado, DADO_NAO_ENCONTRADO)
         self.assertEqual(mensagem, "Membro não encontrado")
-        
-    delete_membros()
 
 if __name__ == "__main__":
     unittest.main()
