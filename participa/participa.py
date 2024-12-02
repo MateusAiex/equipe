@@ -1,4 +1,4 @@
-__all__ = ["set_lider", "validate_unique_lider", "assign_membro", "check_team_roles", "get_membros_from_equipe", "get_equipe_from_membro", "get_membros_by_id"]
+__all__ = ["get_participacoes","set_lider", "validate_unique_lider", "assign_membro", "check_team_roles", "get_membros_from_equipe", "get_equipe_from_membro", "get_membros_by_id"]
 
 # Define global variables
 lista_participacoes = []
@@ -106,6 +106,16 @@ def get_membros_from_equipe(id_equipe: int):
     if membros:
         return STATUS_OK, membros
     return DADO_NAO_ENCONTRADO, []
+
+def get_participacoes():
+    """
+    Retorna todas as participações.
+
+    Retorna:
+    list: Lista de participações.
+    """
+    global lista_participacoes
+    return lista_participacoes
 
 
 def get_equipe_from_membro(id_membro: int):

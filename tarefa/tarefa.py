@@ -32,6 +32,8 @@ def create_tarefa(descricao: str, status: str, prioridade: int, id_projeto: int)
     """
     global lista_tarefas
     global id_tarefa_provisorio
+    if not descricao or not status or not prioridade or not id_projeto:
+        return DADOS_INVALIDOS, {}
 
     try:
         id_tarefa_provisorio += 1
