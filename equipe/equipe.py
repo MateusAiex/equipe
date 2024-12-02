@@ -12,6 +12,16 @@ NOME_DE_EQUIPE_JA_EXISTE = 3
 
 
 def create_equipe(nome: str, funcoes: list) -> tuple[int, dict]:
+    """
+    Cria uma nova equipe.
+
+    Parâmetros:
+    nome (str): Nome da equipe.
+    funcoes (list): Lista de funções atribuídas à equipe.
+
+    Retorna:
+    tuple: Código de status e os dados da equipe criada ou mensagem de erro.
+    """
     global lista_equipes
     global id_equipe
 
@@ -35,11 +45,26 @@ def create_equipe(nome: str, funcoes: list) -> tuple[int, dict]:
 
 
 def get_equipes() -> tuple[int, list]:
+    """
+    Obtém todas as equipes cadastradas.
+
+    Retorna:
+    tuple: Código de status e a lista de equipes.
+    """
     global lista_equipes
     return OPERACAO_REALIZADA_COM_SUCESSO, lista_equipes
 
 
 def get_equipe_by_id(id_equipe: int) -> tuple[int, dict]:
+    """
+    Busca uma equipe pelo ID.
+
+    Parâmetros:
+    id_equipe (int): ID da equipe.
+
+    Retorna:
+    tuple: Código de status e os dados da equipe ou mensagem de erro.
+    """
     global lista_equipes
 
     for equipe in lista_equipes:
@@ -50,6 +75,15 @@ def get_equipe_by_id(id_equipe: int) -> tuple[int, dict]:
 
 
 def delete_equipe(id_equipe: int) -> tuple[int, dict]:
+    """
+    Remove uma equipe pelo ID.
+
+    Parâmetros:
+    id_equipe (int): ID da equipe.
+
+    Retorna:
+    tuple: Código de status e os dados da equipe removida ou mensagem de erro.
+    """
     global lista_equipes
 
     for equipe in lista_equipes:
@@ -59,7 +93,12 @@ def delete_equipe(id_equipe: int) -> tuple[int, dict]:
 
     return EQUIPE_NAO_ENCONTRADA, "Membro não encontrado"
 
-
 def delete_equipes():
+    """
+    Remove todas as equipes cadastradas.
+
+    Retorna:
+    None
+    """
     global lista_equipes
     lista_equipes.clear()
