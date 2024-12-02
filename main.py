@@ -98,28 +98,39 @@ def criar_janela_principal():
         descricao_entry.pack(pady=5)
 
         tk.Label(janela_cadastro, text="Prazo (Dia/Mês/Ano):").pack(pady=5)
-        prazo_dia_entry = tk.Entry(janela_cadastro, width=5)
+
+        frame_prazo = tk.Frame(janela_cadastro)
+        frame_prazo.pack(pady=5)
+
+        prazo_dia_entry = tk.Entry(frame_prazo, width=5)
         prazo_dia_entry.pack(side="left", padx=5)
-        prazo_mes_entry = tk.Entry(janela_cadastro, width=5)
+        tk.Label(frame_prazo, text="/").pack(side="left")
+
+        prazo_mes_entry = tk.Entry(frame_prazo, width=5)
         prazo_mes_entry.pack(side="left", padx=5)
-        prazo_ano_entry = tk.Entry(janela_cadastro, width=5)
+        tk.Label(frame_prazo, text="/").pack(side="left")
+
+        prazo_ano_entry = tk.Entry(frame_prazo, width=8)
         prazo_ano_entry.pack(side="left", padx=5)
 
         def salvar_projeto():
-            titulo = titulo_entry.get()
-            descricao = descricao_entry.get()
-            prazo = (
-                int(prazo_dia_entry.get()),
-                int(prazo_mes_entry.get()),
-                int(prazo_ano_entry.get()),
-            )
-            resultado, projeto = create_projeto(titulo, descricao, prazo)
-            if resultado == 0:
-                dados["projetos"].append(projeto)
-                messagebox.showinfo("Sucesso", "Projeto cadastrado com sucesso!")
-                janela_cadastro.destroy()
-            else:
-                messagebox.showerror("Erro", "Falha ao cadastrar projeto.")
+            try:
+                titulo = titulo_entry.get()
+                descricao = descricao_entry.get()
+                prazo = (
+                    int(prazo_dia_entry.get()),
+                    int(prazo_mes_entry.get()),
+                    int(prazo_ano_entry.get()),
+                )
+                resultado, projeto = create_projeto(titulo, descricao, prazo)
+                if resultado == 0:
+                    dados["projetos"].append(projeto)
+                    messagebox.showinfo("Sucesso", "Projeto cadastrado com sucesso!")
+                    janela_cadastro.destroy()
+                else:
+                    messagebox.showerror("Erro", "Falha ao cadastrar projeto.")
+            except ValueError:
+                messagebox.showerror("Erro", "Por favor, insira valores válidos para o prazo.")
 
         tk.Button(janela_cadastro, text="Salvar", command=salvar_projeto).pack(pady=20)
 
