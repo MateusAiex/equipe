@@ -1,11 +1,17 @@
 import unittest
 from unittest.mock import patch
 from participa import (
-    lista_participacoes, STATUS_OK, DADO_NAO_ENCONTRADO, MULTIPLOS_LIDERES,
-    PAPEIS_INCOMPLETOS, MEMBRO_JA_ATRIBUIDO, set_lider, validate_unique_lider,
+    lista_participacoes, set_lider, validate_unique_lider,
     assign_membro, check_team_roles, get_membros_from_equipe, get_equipe_from_membro,
     get_membros_by_id
 )
+
+
+STATUS_OK = 0
+DADO_NAO_ENCONTRADO = 4
+MULTIPLOS_LIDERES = 2
+PAPEIS_INCOMPLETOS = 5
+MEMBRO_JA_ATRIBUIDO = 7
 
 class TestParticipaFunctions(unittest.TestCase):
 

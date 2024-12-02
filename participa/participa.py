@@ -1,3 +1,5 @@
+__all__ = ["set_lider", "validate_unique_lider", "assign_membro", "check_team_roles", "get_membros_from_equipe", "get_equipe_from_membro", "get_membros_by_id"]
+
 # Define global variables
 lista_participacoes = []
 
