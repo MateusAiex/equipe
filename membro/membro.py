@@ -19,6 +19,16 @@ DADOS_INVALIDOS = 1
 
 
 def create_membro(nome: str, funcoes: list) -> tuple[int, dict]:
+    """
+    Cria um novo membro.
+
+    Parâmetros:
+    nome (str): Nome do membro.
+    funcoes (list): Lista de funções atribuídas ao membro.
+
+    Retorna:
+    tuple: Código de status e os dados do membro criado ou mensagem de erro.
+    """
     global lista_membros
     global id_membro
 
@@ -41,6 +51,16 @@ def create_membro(nome: str, funcoes: list) -> tuple[int, dict]:
     return STATUS_OK, membro
 
 def set_funcoes(id: int, funcoes: list) -> tuple[int, dict]:
+    """
+    Atualiza as funções atribuídas a um membro.
+
+    Parâmetros:
+    id (int): ID do membro.
+    funcoes (list): Nova lista de funções para o membro.
+
+    Retorna:
+    tuple: Código de status e os dados atualizados do membro ou mensagem de erro.
+    """
     global lista_membros
     
     if not isinstance(funcoes, list) or len(funcoes) == 0:
@@ -54,6 +74,15 @@ def set_funcoes(id: int, funcoes: list) -> tuple[int, dict]:
     return DADO_NAO_ENCONTRADO, "Membro não encontrado"
 
 def get_membro_by_id(id: int) -> tuple[int, dict]:
+    """
+    Busca um membro pelo ID.
+
+    Parâmetros:
+    id (int): ID do membro.
+
+    Retorna:
+    tuple: Código de status e os dados do membro ou mensagem de erro.
+    """
     global lista_membros
 
     for m in lista_membros:
@@ -64,11 +93,26 @@ def get_membro_by_id(id: int) -> tuple[int, dict]:
   
 
 def get_membros() -> tuple[int, dict]:
+    """
+    Obtém todos os membros cadastrados.
+
+    Retorna:
+    tuple: Código de status e a lista de membros.
+    """
     global lista_membros
 
     return STATUS_OK, lista_membros
 
 def delete_membro(id: int) -> tuple[int, dict]:
+    """
+    Remove um membro pelo ID.
+
+    Parâmetros:
+    id (int): ID do membro.
+
+    Retorna:
+    tuple: Código de status e os dados do membro removido ou mensagem de erro.
+    """
     global lista_membros
 
     for m in lista_membros:
